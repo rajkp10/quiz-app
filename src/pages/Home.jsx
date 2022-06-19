@@ -49,6 +49,7 @@ function Home() {
             onChange={handleChange}
           >
             <option value="sports">Sports</option>
+            <option value="film">Film</option>
             <option value="history">History</option>
             <option value="politics">Politics</option>
           </Select>

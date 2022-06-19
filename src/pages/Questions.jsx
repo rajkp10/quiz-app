@@ -10,13 +10,17 @@ import {
   ModalHeader,
   ModalBody,
   useDisclosure,
+  ModalFooter,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 import { useGlobalContext } from "../context";
 
 function Questions() {
   const {
     loading,
+    error,
     questions,
     index,
     correct,
@@ -25,10 +29,17 @@ function Questions() {
     openModal,
   } = useGlobalContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    error && navigate("/", { replace: true });
+    // questions.length === 0 && navigate("/", { replace: true });
+  }, [error]);
 
   if (loading) {
-    return <div>loading</div>;
+    return <Loader />;
   }
+
   const { question, correct_answer, incorrect_answers } = questions[index];
 
   const options = [...incorrect_answers, correct_answer];
@@ -39,6 +50,7 @@ function Questions() {
       <VStack
         w={{ base: "90%", md: "80%", lg: "50%" }}
         p={4}
+        my={4}
         bg="white"
         spacing={8}
         borderRadius="xl"
@@ -79,12 +91,34 @@ function Questions() {
           </Button>
         </HStack>
       </VStack>
-      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+      <Modal
+        onClose={onClose}
+        isOpen={isOpen}
+        closeOnOverlayClick={false}
+        motionPresent="slideInBottom"
+        isCentered
+      >
         <ModalContent>
-          <ModalHeader>Result</ModalHeader>
+          <ModalHeader>
+            <Heading>Result</Heading>
+          </ModalHeader>
           <ModalBody>
-            {correct} out of {index + 1}
+            <Text fontSize="2xl">
+              You got{" "}
+              <strong>
+                {((correct / questions.length) * 100).toPrecision(2)}%
+              </strong>{" "}
+              answers right !!!
+            </Text>
           </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              onClick={() => navigate("/", { replace: true })}
+            >
+              Try Again
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </VStack>

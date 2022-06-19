@@ -1,10 +1,12 @@
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 
 const API = "https://opentdb.com/api.php?";
 
 const categoryTable = {
+  film: 11,
   sports: 21,
   history: 23,
   politics: 24,
@@ -24,6 +26,7 @@ const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const toast = useToast();
 
   const handleChange = (e) => {
     setQuiz({ ...quiz, [e.target.name]: e.target.value });
@@ -31,10 +34,11 @@ const AppProvider = ({ children }) => {
 
   const nextQuestion = () => {
     const newIndex = index + 1;
-    if (newIndex === questions.length) {
+    if (newIndex === questions.length - 1) {
       console.log("hll");
       setOpenModal(true);
-    } else {
+    }
+    if (newIndex !== questions.length) {
       setIndex(newIndex);
     }
   };
@@ -52,16 +56,34 @@ const AppProvider = ({ children }) => {
     setLoading(true);
     const { amount, category, difficulty } = quiz;
     const URL = `${API}amount=${amount}&difficulty=${difficulty}&category=${categoryTable[category]}&type=multiple`;
-    const res = await axios.get(URL);
-    setQuestions(res.data.results);
-    setLoading(false);
+    const res = await axios.get(URL).catch((err) => setError(true));
+    const data = res.data.results;
+    if (data.length > 0) {
+      setQuestions(res.data.results);
+      setLoading(false);
+      setError(false);
+    } else {
+      setError(true);
+    }
   };
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Please try different values",
+        status: "error",
+        isClosable: true,
+      });
+    }
+    setError(false);
+  }, [error]);
 
   return (
     <AppContext.Provider
       value={{
         quiz,
         loading,
+        error,
         questions,
         index,
         correct,

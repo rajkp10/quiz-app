@@ -7,11 +7,11 @@ import { AppProvider } from "./context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <>
     <ChakraProvider>
       <AppProvider>
         <App />
       </AppProvider>
     </ChakraProvider>
-  </React.StrictMode>
+  </>
 );
