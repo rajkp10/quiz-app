@@ -23,6 +23,7 @@ const AppProvider = ({ children }) => {
   const [correct, setCorrect] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleChange = (e) => {
     setQuiz({ ...quiz, [e.target.name]: e.target.value });
@@ -30,13 +31,19 @@ const AppProvider = ({ children }) => {
 
   const nextQuestion = () => {
     const newIndex = index + 1;
-    if (index === questions.length + 1) {
-      return 0;
+    if (newIndex === questions.length) {
+      console.log("hll");
+      setOpenModal(true);
+    } else {
+      setIndex(newIndex);
     }
-    setIndex(newIndex);
   };
 
-  const checkAnswer = () => {
+  const checkAnswer = (status) => {
+    if (status) {
+      setCorrect(correct + 1);
+    }
+    console.log(correct);
     nextQuestion();
   };
 
@@ -57,9 +64,12 @@ const AppProvider = ({ children }) => {
         loading,
         questions,
         index,
+        correct,
+        openModal,
         handleChange,
         handleSubmit,
         checkAnswer,
+        nextQuestion,
       }}
     >
       {children}

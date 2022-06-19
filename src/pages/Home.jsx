@@ -29,7 +29,7 @@ function Home() {
           <FormLabel htmlFor="">Number of Questions</FormLabel>
           <Select
             variant="filled"
-            bg="yellow.200"
+            bg="yellow.400"
             name="amount"
             value={quiz.amount}
             onChange={handleChange}
@@ -43,7 +43,7 @@ function Home() {
           <FormLabel htmlFor="">Category</FormLabel>
           <Select
             variant="filled"
-            bg="yellow.200"
+            bg="yellow.400"
             name="category"
             value={quiz.category}
             onChange={handleChange}
@@ -57,7 +57,7 @@ function Home() {
           <FormLabel htmlFor="">Difficulty</FormLabel>
           <Select
             variant="filled"
-            bg="yellow.200"
+            bg="yellow.400"
             name="difficulty"
             value={quiz.difficulty}
             onChange={handleChange}
