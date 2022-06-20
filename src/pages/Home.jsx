@@ -6,6 +6,7 @@ import {
   FormLabel,
   Select,
   Button,
+  Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../context";
@@ -68,7 +69,11 @@ function Home() {
             <option value="hard">Hard</option>
           </Select>
         </FormControl>
+        <Text color="red.500">
+          Do not Refresh the page once the quiz has started.*
+        </Text>
         <Button
+          px={10}
           colorScheme="blue"
           onClick={(e) => {
             handleSubmit(e);

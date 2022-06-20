@@ -34,7 +34,6 @@ function Questions() {
 
   useEffect(() => {
     error && navigate("/", { replace: true });
-    // questions.length === 0 && navigate("/", { replace: true });
   }, [error]);
 
   if (loading) {
@@ -45,6 +44,8 @@ function Questions() {
 
   const options = [...incorrect_answers, correct_answer];
   options.sort(() => Math.random() - 0.5);
+
+  const checkIsModalOpen = () => openModal && onOpen();
 
   return (
     <VStack minH="100vh" w="100%" justifyContent="center" bg="gray.50">
@@ -67,10 +68,7 @@ function Questions() {
                 key={index}
                 onClick={(e) => {
                   checkAnswer(correct_answer === option);
-                  if (openModal) {
-                    console.log("hello");
-                    onOpen();
-                  }
+                  checkIsModalOpen();
                 }}
               >
                 {option}
@@ -86,7 +84,10 @@ function Questions() {
           <Button
             alignSelf="flex-end"
             colorScheme="blue"
-            onClick={nextQuestion}
+            onClick={() => {
+              nextQuestion();
+              checkIsModalOpen();
+            }}
           >
             {openModal ? "Submit Quiz" : "Next Question"}
           </Button>
