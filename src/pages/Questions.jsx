@@ -11,6 +11,7 @@ import {
   ModalBody,
   useDisclosure,
   ModalFooter,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -98,6 +99,7 @@ function Questions() {
         motionPresent="slideInBottom"
         isCentered
       >
+        <ModalOverlay backdropFilter="blur(10px)" />
         <ModalContent>
           <ModalHeader>
             <Heading>Result</Heading>
