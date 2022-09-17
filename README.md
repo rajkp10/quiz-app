@@ -2,6 +2,14 @@
 
 https://quiz-website-rajkp10.netlify.app
 
+# Tools Used
+
+This site was created using ReactJS and Chakra UI
+
+# Preview
+
+![quiz-app](https://user-images.githubusercontent.com/96880670/190869556-c8765634-972f-4b4a-b09e-b97a097181dc.jpg)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
